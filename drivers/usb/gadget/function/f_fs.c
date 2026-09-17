@@ -254,7 +254,7 @@ static void _ffs_free_dev(struct ffs_dev *dev);
 static int ffs_acquire_dev(const char *dev_name, struct ffs_data *ffs_data);
 static void ffs_release_dev(struct ffs_dev *ffs_dev);
 static int ffs_ready(struct ffs_data *ffs);
-static void ffs_closed(struct ffs_data *ffs);
+static noinline void ffs_closed(struct ffs_data *ffs);
 static void ffs_reset_work(struct work_struct *work);
 
 /* Misc helper functions ****************************************************/
@@ -1860,7 +1860,7 @@ static void ffs_data_reset(struct ffs_data *ffs)
 }
 
 
-static int functionfs_bind(struct ffs_data *ffs, struct usb_composite_dev *cdev)
+static noinline int functionfs_bind(struct ffs_data *ffs, struct usb_composite_dev *cdev)
 {
 	struct usb_gadget_strings **lang;
 	int first_id;
@@ -3835,7 +3835,7 @@ done:
 	return ret;
 }
 
-static void ffs_closed(struct ffs_data *ffs)
+static noinline void ffs_closed(struct ffs_data *ffs)
 {
 	struct ffs_dev *ffs_obj;
 	struct f_fs_opts *opts;
